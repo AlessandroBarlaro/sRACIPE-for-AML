@@ -1,0 +1,53 @@
+#serve una funzione da function.R
+outdir <- './circuits/'
+
+circuits <- readRDS(file = './circuits/circuits.rds')
+length(names(circuits)) 
+
+circuit_metrics <- cal.circuit_metrics.globally(networkList=circuits)
+circuit_metrics.tmp <- circuit_metrics
+
+circuit.metrics.sorted <- circuit_metrics[with(circuit_metrics, order(Nodes, Interactions, PosInt)), ]
+circuit_metrics <- circuit.metrics.sorted
+
+max(circuit.metrics.sorted$Nodes)
+min(circuit.metrics.sorted$Nodes)
+sum(circuit.metrics.sorted$Nodes==4)
+
+# Find duplicate topologies - based on THREE network features 
+# node_count, interaction_count.similarity, posInt.similarity: 
+# screening by metric node_count 
+node_count.similarity <- duplicated(circuit_metrics$Nodes)
+sum(node_count.similarity)  # 533 
+
+# screening by metric interaction_count.similarity
+interaction_count.similarity <- duplicated(circuit_metrics$Interactions) 
+interaction_count.similarity
+sum(interaction_count.similarity) # 461
+
+# screening by metric posInt.similarity
+posInt.similarity <- duplicated(circuit_metrics$PosInt)  
+sum(posInt.similarity) # 517
+
+# Find duplicates
+node_interaction_posInt.similarity <- node_count.similarity & interaction_count.similarity & posInt.similarity
+sum(node_interaction_posInt.similarity) # 396
+
+circuit_metrics$DupStatus <- node_interaction_posInt.similarity
+
+# Add a column to indicate which circuit is simulated
+SimIdx <- vector(mode = "character", length = dim(circuit_metrics)[1])
+SimIdx[1] <- rownames(circuit_metrics)[1]
+for(j in 2:dim(circuit_metrics)[1]){
+   if(circuit_metrics$DupStatus[j]) SimIdx[j] <- SimIdx[j-1] 
+   else SimIdx[j] <- rownames(circuit_metrics)[j] 
+}
+circuit_metrics$SimIdx <- SimIdx
+
+# Attach the topology id (row name) of the non-duplicated topology 
+# to the duplicated topologies with that non-duplicated topology
+#---------------------------------------------------------------
+write.csv(circuit_metrics, file = paste0(outdir, './summary.circuits.csv'), 
+          row.names = T, quote = F)
+write.csv(circuit_metrics.tmp, file = paste0(outdir, './summary.circuits.asorted.csv'), 
+          row.names = T, quote = F)
