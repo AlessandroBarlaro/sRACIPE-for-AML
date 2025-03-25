@@ -1,17 +1,23 @@
+#creazione directory 
 outdir <- './circuits/'
 dir.create(outdir)
 
+#caricamento espressioni sperimentali
 fname.eset.brain_array <- '../data.tfs/eset.brain_array.rda'
 load(fname.eset.brain_array)
 
+#caricamento de results
 fname.de.results <- '../data.tfs/de.results.rda'
 load(fname.de.results)
 
+#lista fattroi di trascrizione
 coreTFs.list <- readRDS('../tfSets/data/coreTFs.rds')
 names(coreTFs.list)
 
+#lista target TF
 targetDB.list <- readRDS('../databases/targetDB.list.rds')
 
+#creazione circuiti
 circuits <- list()   
 for(fr in names(coreTFs.list)){ 
    print(fr)
