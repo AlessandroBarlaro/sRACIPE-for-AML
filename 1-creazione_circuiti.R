@@ -325,15 +325,18 @@ SUBNETWORK.SIZE.TSH <- 0.80
 outdir <- './circuits/'
 dir.create(outdir)
 
+download.file(url = "https://github.com/AlessandroBarlaro/sRACIPE-for-AML/blob/main/eset.brain_array.rda", destfile = "./eset.brain_array.rda")                                
 fname.eset.brain_array <- './eset.brain_array.rda'
 load(fname.eset.brain_array)
 
+download.file(url = "https://github.com/AlessandroBarlaro/sRACIPE-for-AML/blob/main/de.results.rda", destfile = "./de.results.rda")                           
 fname.de.results <- './de.results.rda'
 load(fname.de.results)
 
 download.file(url = "https://github.com/AlessandroBarlaro/sRACIPE-for-AML/blob/main/coreTFs.rds", destfile = "./coreTFs.rds")                                
 coreTFs.list <- readRDS('./coreTFs.rds')
 
+download.file(url = "https://github.com/AlessandroBarlaro/sRACIPE-for-AML/blob/main/targetDB.list.rds", destfile = "./targetDB.list.rds")                                
 targetDB.list <- readRDS('./targetDB.list.rds')
 
 circuits <- list()   
