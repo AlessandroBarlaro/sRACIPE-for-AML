@@ -331,6 +331,7 @@ load(fname.eset.brain_array)
 fname.de.results <- './de.results.rda'
 load(fname.de.results)
 
+download.file(url = "https://github.com/AlessandroBarlaro/sRACIPE-for-AML/blob/main/coreTFs.rds", destfile = "./coreTFs.rds")                                
 coreTFs.list <- readRDS('./coreTFs.rds')
 
 targetDB.list <- readRDS('./targetDB.list.rds')
