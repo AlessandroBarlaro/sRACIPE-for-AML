@@ -1,4 +1,6 @@
-library(NetAct)
+library(devtools)
+install_github("lusystemsbio/NetAct", dependencies=T, build_vignettes = T)
+
 library(igraph)
 
 # prima funzione
