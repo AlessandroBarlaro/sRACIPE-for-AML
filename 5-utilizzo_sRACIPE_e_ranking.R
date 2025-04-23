@@ -68,7 +68,7 @@ fname.de.results <- './de.results.rda'
 load(fname.de.results)
 
 #caricare il cluster cut dei dati sperimentali
-tmp <- read.csv(file = './clusterCut.REF.csv', row.names = 1)
+tmp <- read.csv("https://raw.githubusercontent.com/AlessandroBarlaro/sRACIPE-for-AML/refs/heads/main/clusterCut.REF.csv", row.names = 1)
 clusterCut.REF <- as.integer(tmp$x)
 names(clusterCut.REF) <- as.character(rownames(tmp))
 
